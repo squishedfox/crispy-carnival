@@ -1,26 +1,62 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useQuery, gql } from "@apollo/client";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const FORM_DASHBOARD_LIST_QUERY = gql`
+	query GetForms {
+		forms {
+			forms {
+				id
+				name
+			}
+		}
+	}
+`;
+
+const App = () => {
+	const {
+		loading,
+		data = { forms: { forms: [] } },
+		error = null,
+		errors = [],
+	} = useQuery<{ forms: { forms: { id: string; name: string }[] } }>(
+		FORM_DASHBOARD_LIST_QUERY,
+	);
+
+	if (loading) {
+		return (
+			<div style={{ margin: "auto", width: "50%" }}>
+				<h1>Loading...</h1>
+			</div>
+		);
+	}
+
+	if (error) {
+		return (
+			<div>
+				<h1>{error.name}</h1>
+				{error.stack && <pre>{error.stack}</pre>}
+			</div>
+		);
+	}
+
+	console.debug("data = ", data);
+	return (
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				{data.forms.forms.map((item) => (
+					<tr key={item.id}>
+						<td>{item.id}</td>
+						<td>{item.name}</td>
+					</tr>
+				))}
+			</tbody>
+		</table>
+	);
+};
 
 export default App;
