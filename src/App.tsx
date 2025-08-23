@@ -1,6 +1,15 @@
 import { useQuery, gql } from "@apollo/client";
 import LoadingComponent from "./components/loading.component";
 
+export interface FormListQueryResponse {
+	forms: {
+		forms: Array<{
+			id: string;
+			name: string;
+		}>;
+	};
+}
+
 const FORM_DASHBOARD_LIST_QUERY = gql`
 	query GetForms {
 		forms {
@@ -17,10 +26,7 @@ const App = () => {
 		loading,
 		data = { forms: { forms: [] } },
 		error = null,
-		errors = [],
-	} = useQuery<{ forms: { forms: { id: string; name: string }[] } }>(
-		FORM_DASHBOARD_LIST_QUERY,
-	);
+	} = useQuery<FormListQueryResponse>(FORM_DASHBOARD_LIST_QUERY);
 
 	if (loading) {
 		return <LoadingComponent />;
