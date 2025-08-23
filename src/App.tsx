@@ -1,4 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
+import LoadingComponent from "./components/loading.component";
 
 const FORM_DASHBOARD_LIST_QUERY = gql`
 	query GetForms {
@@ -22,11 +23,7 @@ const App = () => {
 	);
 
 	if (loading) {
-		return (
-			<div style={{ margin: "auto", width: "50%" }}>
-				<h1>Loading...</h1>
-			</div>
-		);
+		return <LoadingComponent />;
 	}
 
 	if (error) {
@@ -38,7 +35,6 @@ const App = () => {
 		);
 	}
 
-	console.debug("data = ", data);
 	return (
 		<table>
 			<thead>
