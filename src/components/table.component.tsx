@@ -41,6 +41,9 @@ export interface TableComponentProps {
 	onSort: (fielKey: string) => void;
 }
 
+const IsFunction = (value: any): value is GetDisplayCellFunc =>
+	typeof value === "function";
+
 const TableComponent = ({ headers, data, onSort }: TableComponentProps) => {
 	return (
 		<table>
@@ -61,16 +64,16 @@ const TableComponent = ({ headers, data, onSort }: TableComponentProps) => {
 			<tbody>
 				{data.map((row, ix) => (
 					<tr key={ix}>
-						{headers.map(({ fieldKey }) => (
-							<td key={`${fieldKey}-${ix}`}>
-								{() => {
-									if (typeof row[fieldKey] === "function") {
-										return row[fieldKey](fieldKey, ix);
-									}
-									return row[fieldKey];
-								}}
-							</td>
-						))}
+						{headers.map(({ fieldKey }) => {
+							const value = row[fieldKey];
+							return (
+								<td key={`${fieldKey}-${ix}`}>
+									{IsFunction(value)
+										? value(fieldKey, ix)
+										: value}
+								</td>
+							);
+						})}
 					</tr>
 				))}
 			</tbody>
