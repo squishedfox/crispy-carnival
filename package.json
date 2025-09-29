@@ -24,12 +24,15 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"prepare": "husky"
+		"prepare": "husky",
+		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build"
 	},
 	"eslintConfig": {
 		"extends": [
 			"react-app",
-			"react-app/jest"
+			"react-app/jest",
+			"plugin:storybook/recommended"
 		]
 	},
 	"lint-staged": {
@@ -48,8 +51,16 @@
 		]
 	},
 	"devDependencies": {
+		"@storybook/addon-docs": "^9.1.8",
+		"@storybook/addon-onboarding": "^9.1.8",
+		"@storybook/preset-create-react-app": "^9.1.8",
+		"@storybook/react-webpack5": "^9.1.8",
+		"eslint-plugin-storybook": "^9.1.8",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.1.5",
-		"prettier": "^3.6.2"
+		"prettier": "^3.6.2",
+		"prop-types": "^15.8.1",
+		"storybook": "^9.1.8",
+		"webpack": "^5.101.3"
 	}
 }
