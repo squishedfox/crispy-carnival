@@ -12,11 +12,11 @@ export interface PaginatableTable extends PropsWithChildren<{}> {
 	 * Pass in to override the page number that might be default selected.
 	 * Default page number starts at 1
 	 */
-	pageNumber?: number;
+	pageNumber?: number | null;
 	/**
 	 * Pass in to override the page size that might be default selected
 	 */
-	pageSize?: number;
+	pageSize?: 25 | 50 | 100 | null;
 	/**
 	 * Total number of pages that the user can migrate between
 	 */
