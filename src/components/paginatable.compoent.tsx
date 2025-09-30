@@ -28,8 +28,8 @@ export interface PaginatableTable extends PropsWithChildren<{}> {
 }
 const Paginatable = ({
 	title,
-	pageNumber = 1,
-	pageSize = 25,
+	pageNumber = DEFAULT_PAGE_NUMBER,
+	pageSize = DEFAULT_PAGE_SIZE,
 	onPage,
 	children,
 }: PaginatableTable) => {
