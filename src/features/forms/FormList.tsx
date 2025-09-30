@@ -5,7 +5,7 @@ import {
 	Paginatable,
 	Table,
 	TableComponentProps,
-} from "../../components";
+} from "@app/components";
 import { useFormListQuery } from "./formListQuery";
 
 const headers: TableComponentProps["headers"] = [
