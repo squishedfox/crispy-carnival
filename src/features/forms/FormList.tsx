@@ -25,7 +25,7 @@ const headers: TableComponentProps["headers"] = [
 
 const FormList = () => {
 	const [pageNumber, setPageNumber] = useState(1);
-	const [pageSize, setPageSize] = useState(25);
+	const [pageSize, setPageSize] = useState<25 | 50 | 100 | null>(25);
 
 	const {
 		count = 0,
@@ -34,7 +34,7 @@ const FormList = () => {
 		error = null,
 	} = useFormListQuery({
 		id: null,
-		limit: pageSize,
+		limit: Number(pageSize),
 		page: pageNumber,
 	});
 
@@ -49,7 +49,9 @@ const FormList = () => {
 		return <ApolloErrorDisplay error={error} />;
 	}
 
-	const totalPages: number = !!count ? Math.floor(count / pageSize) : 0;
+	const totalPages: number = !!count
+		? Math.floor(count / Number(pageSize))
+		: 0;
 	const rows = !!forms.length
 		? forms.map((form) => ({
 				id: form.id,

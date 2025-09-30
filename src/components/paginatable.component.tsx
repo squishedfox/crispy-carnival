@@ -81,7 +81,7 @@ const Paginatable = ({
 		const numValue = Number(currentTarget.value);
 		if (!Number.isNaN(numValue)) {
 			setSelectedPagNumber(numValue);
-			onPage(pageNumber, numValue);
+			onPage(pageNumber!, numValue);
 		}
 	};
 
