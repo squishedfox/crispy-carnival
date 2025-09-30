@@ -1,10 +1,4 @@
-import {
-	ChangeEvent,
-	PropsWithChildren,
-	useEffect,
-	useState,
-	MouseEvent,
-} from "react";
+import { ChangeEvent, PropsWithChildren, useEffect, useState } from "react";
 
 const DEFAULT_PAGE_SIZE = 25;
 const DEFAULT_PAGE_NUMBER = 1;
