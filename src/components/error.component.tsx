@@ -1,6 +1,6 @@
-import { ApolloError as InternalApolloError } from "@apollo/client";
+import { ApolloError } from "@apollo/client";
 
-const ApolloError = ({ error }: { error: InternalApolloError }) => {
+const ApolloErrorDisplay = ({ error }: { error: ApolloError }) => {
 	return (
 		<div role='alert'>
 			{!!error.name?.length ? <h3>{error.name}</h3> : "Error"}
@@ -11,4 +11,4 @@ const ApolloError = ({ error }: { error: InternalApolloError }) => {
 	);
 };
 
-export { ApolloError };
+export { ApolloErrorDisplay };

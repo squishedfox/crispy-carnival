@@ -1,4 +1,10 @@
-import { ChangeEvent, PropsWithChildren, useEffect, useState } from "react";
+import {
+	ChangeEvent,
+	PropsWithChildren,
+	useEffect,
+	useState,
+	MouseEvent,
+} from "react";
 
 const DEFAULT_PAGE_SIZE = 25;
 const DEFAULT_PAGE_NUMBER = 1;
@@ -85,7 +91,17 @@ const Paginatable = ({
 		}
 	};
 
-	const onPageClick;
+	/**
+	 * Callback handler for when users are navigating forwards and backwards in their pages
+	 */
+	const onPaginateClick = (newValue: number) => {
+		if (newValue === 1) {
+			return; // nothing to do
+		}
+		const currentPageNumber = selectedPageNumber;
+		setSelectedPagNumber(newValue);
+		onPage(currentPageNumber, newValue);
+	};
 
 	return (
 		<div>
@@ -103,7 +119,7 @@ const Paginatable = ({
 						value={selectedPageSize}
 						onChange={onPageSizeChange}
 					>
-						<option selected={selectedPageSize === 25} valme='25'>
+						<option selected={selectedPageSize === 25} value='25'>
 							25
 						</option>
 						<option selected={selectedPageSize === 50} value='50'>
@@ -127,8 +143,20 @@ const Paginatable = ({
 						/>
 					</div>
 					<div role='group'>
-						<button onClick={}>Prev</button>
-						<button>Next</button>
+						<button
+							onClick={() =>
+								onPaginateClick(selectedPageNumber - 1)
+							}
+						>
+							Previous
+						</button>
+						<button
+							onClick={() =>
+								onPaginateClick(selectedPageNumber + 1)
+							}
+						>
+							Next
+						</button>
 					</div>
 				</div>
 			</footer>

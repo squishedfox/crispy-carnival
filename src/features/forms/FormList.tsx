@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { ApolloError } from "../../components/Error.component";
-import LoadingComponent from "../../components/loading.component";
-import Paginatable from "../../components/paginatable.compoent";
-import Table, { TableComponentProps } from "../../components/table.component";
+import {
+	ApolloErrorDisplay,
+	LoadingSpinner,
+	Paginatable,
+	Table,
+	TableComponentProps,
+} from "../../components";
 import { useFormListQuery } from "./formListQuery";
 
 const headers: TableComponentProps["headers"] = [
@@ -40,10 +43,10 @@ const FormList = () => {
 	};
 
 	if (isFormListLoading) {
-		return <LoadingComponent />;
+		return <LoadingSpinner />;
 	}
 	if (error) {
-		return <ApolloError error={error} />;
+		return <ApolloErrorDisplay error={error} />;
 	}
 
 	const totalPages: number = !!count ? Math.floor(count / pageSize) : 0;
