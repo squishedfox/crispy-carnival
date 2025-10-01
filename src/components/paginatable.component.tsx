@@ -1,4 +1,5 @@
 import { ChangeEvent, PropsWithChildren, useEffect, useState } from "react";
+import "./paginatable.css";
 
 const DEFAULT_PAGE_SIZE = 25;
 const DEFAULT_PAGE_NUMBER = 1;
@@ -89,7 +90,7 @@ const Paginatable = ({
 	 * Callback handler for when users are navigating forwards and backwards in their pages
 	 */
 	const onPaginateClick = (newValue: number) => {
-		if (newValue === 1) {
+		if (newValue === 0) {
 			return; // nothing to do
 		}
 		const currentPageNumber = selectedPageNumber;
@@ -107,35 +108,8 @@ const Paginatable = ({
 			</header>
 			{children}
 			<footer>
-				<div>
-					<select
-						defaultValue='25'
-						value={selectedPageSize}
-						onChange={onPageSizeChange}
-					>
-						<option selected={selectedPageSize === 25} value='25'>
-							25
-						</option>
-						<option selected={selectedPageSize === 50} value='50'>
-							50
-						</option>
-						<option selected={selectedPageSize === 100} value='100'>
-							100
-						</option>
-					</select>
-				</div>
 				<div role='navigation'>
-					<div role='group'>
-						<label aria-description='current page number'>
-							Page
-						</label>
-						<input
-							min='0'
-							type='number'
-							value={selectedPageNumber}
-							onChange={onPageNumberChange}
-						/>
-					</div>
+					<div role='group'></div>
 					<div role='group'>
 						<button
 							onClick={() =>
@@ -144,6 +118,19 @@ const Paginatable = ({
 						>
 							Previous
 						</button>
+						<label
+							hidden
+							aria-hidden={false}
+							aria-description='current page number'
+						>
+							Page
+						</label>
+						<input
+							min='0'
+							type='number'
+							value={selectedPageNumber}
+							onChange={onPageNumberChange}
+						/>
 						<button
 							onClick={() =>
 								onPaginateClick(selectedPageNumber + 1)
@@ -151,6 +138,16 @@ const Paginatable = ({
 						>
 							Next
 						</button>
+					</div>
+					<div role='group'>
+						<select
+							value={selectedPageSize}
+							onChange={onPageSizeChange}
+						>
+							<option value='25'>25</option>
+							<option value='50'>50</option>
+							<option value='100'>100</option>
+						</select>
 					</div>
 				</div>
 			</footer>

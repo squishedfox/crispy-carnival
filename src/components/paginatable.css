@@ -1,0 +1,20 @@
+footer {
+	div[role="navigation"],
+	div[role="group"] {
+		display: flex;
+		flex-flow: row wrap;
+	}
+
+	div[role="group"] > * {
+		margin-left: 1em;
+	}
+
+	div[role="navigation"] {
+		width: 100%;
+		justify-content: right;
+	}
+
+	div[role="navigation"] input {
+		max-width: 3em;
+	}
+}
