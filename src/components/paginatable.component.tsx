@@ -1,9 +1,7 @@
 import { ChangeEvent, PropsWithChildren, useEffect, useState } from "react";
 import "./paginatable.css";
 
-const DEFAULT_PAGE_SIZE = 25;
-const DEFAULT_PAGE_NUMBER = 1;
-
+export type PageSize = 10 | 25 | 50 | 75 | 100 | null;
 export interface PaginatableTable extends PropsWithChildren<{}> {
 	/**
 	 * Title of the table to give user additional information
@@ -17,7 +15,7 @@ export interface PaginatableTable extends PropsWithChildren<{}> {
 	/**
 	 * Pass in to override the page size that might be default selected
 	 */
-	pageSize?: 25 | 50 | 100 | null;
+	pageSize?: PageSize;
 	/**
 	 * Total number of pages that the user can migrate between
 	 */
@@ -26,12 +24,22 @@ export interface PaginatableTable extends PropsWithChildren<{}> {
 	 * Callback for when the next or previous buttons are clicked
 	 */
 	onPage: (prevPage: number, newPage: number) => void;
+
+	/**
+	 * Callback for when the user changes the pages size to scroll
+	 */
+	onPageSizeChange: (prevSize: PageSize, newSize: PageSize) => void;
 }
+
+const DEFAULT_PAGE_SIZE: PageSize = 25;
+const DEFAULT_PAGE_NUMBER = 1;
+
 const Paginatable = ({
 	title,
 	pageNumber = DEFAULT_PAGE_NUMBER,
 	pageSize = DEFAULT_PAGE_SIZE,
 	onPage,
+	onPageSizeChange: onSizeChange,
 	children,
 }: PaginatableTable) => {
 	const [selectedPageSize, setSelectedPageSize] = useState(
@@ -67,9 +75,11 @@ const Paginatable = ({
 	const onPageSizeChange = ({
 		currentTarget,
 	}: ChangeEvent<HTMLSelectElement>) => {
-		const numValue = Number(currentTarget.value);
-		if (!Number.isNaN(numValue)) {
-			setSelectedPagNumber(numValue);
+		const newValue = Number(currentTarget.value);
+		const currentValue = selectedPageSize;
+		if (!Number.isNaN(newValue)) {
+			setSelectedPageSize(newValue);
+			onSizeChange(currentValue as PageSize, newValue as PageSize);
 		}
 	};
 

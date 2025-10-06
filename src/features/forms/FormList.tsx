@@ -7,6 +7,10 @@ import {
 	TableComponentProps,
 } from "@app/components";
 import { useFormListQuery } from "./formListQuery";
+import {
+	PageSize,
+	PaginatableTable,
+} from "@app/components/paginatable.component";
 
 const headers: TableComponentProps["headers"] = [
 	{
@@ -25,7 +29,7 @@ const headers: TableComponentProps["headers"] = [
 
 const FormList = () => {
 	const [pageNumber, setPageNumber] = useState(1);
-	const [pageSize, setPageSize] = useState<25 | 50 | 100 | null>(25);
+	const [pageSize, setPageSize] = useState<PageSize>(25);
 
 	const {
 		count = 0,
@@ -42,6 +46,10 @@ const FormList = () => {
 		setPageNumber(newPageNum);
 	};
 
+	const handlePageSizeChange = (_: PageSize, newPageSize: PageSize): void => {
+		setPageSize(newPageSize);
+	};
+
 	if (isFormListLoading) {
 		return <LoadingSpinner />;
 	}
@@ -52,6 +60,7 @@ const FormList = () => {
 	const totalPages: number = !!count
 		? Math.floor(count / Number(pageSize))
 		: 0;
+
 	const rows = !!forms.length
 		? forms.map((form) => ({
 				id: form.id,
@@ -61,11 +70,12 @@ const FormList = () => {
 
 	return (
 		<Paginatable
-			onPage={handlePage}
 			pageSize={pageSize}
 			pageNumber={pageNumber}
 			title='Forms List'
 			totalPages={totalPages}
+			onPage={handlePage}
+			onPageSizeChange={handlePageSizeChange}
 		>
 			<Table
 				headers={headers}
