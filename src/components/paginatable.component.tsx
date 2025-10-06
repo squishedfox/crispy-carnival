@@ -154,8 +154,10 @@ const Paginatable = ({
 							value={selectedPageSize}
 							onChange={onPageSizeChange}
 						>
+							<option value='10'>25</option>
 							<option value='25'>25</option>
 							<option value='50'>50</option>
+							<option value='75'>50</option>
 							<option value='100'>100</option>
 						</select>
 					</div>
